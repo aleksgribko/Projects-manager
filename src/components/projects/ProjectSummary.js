@@ -1,12 +1,17 @@
 import React from 'react'
+import projectReducer from '../../store/reducers/projectReducer';
 
-const ProjectSummary = () => {
+// library to form a date
+import moment from 'moment' 
+
+const ProjectSummary = ({project}) => {
+    console.log(project)
     return (
         <div className="card z-depth-0 project-summary">
             <div className="card-content grey-text text-darken-3">
-                <span className="card-title">Project Title</span>
-                <p>Posted by AG</p>
-                <p className="grey-text">3rd Sept, 3 am</p>
+                <span className="card-title">{project.title}</span>
+                <p>Posted by {project.authorFirstName} {project.authorLastName}</p>
+                <p className="grey-text">{ moment(project.createdAt.toDate()).calendar() }</p>
             </div>
         </div>
     )

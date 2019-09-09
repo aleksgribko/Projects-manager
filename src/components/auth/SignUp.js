@@ -1,17 +1,19 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
+import { signUp } from '../../store/actions/authActions'
 
-function SignUp() {
+function SignUp(props) {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [userFirstName, setUserFirstName] = useState('')
-    const [userLastName, setUserLastName] = useState('')
-    
+    const [userLastName, setUserLastName] = useState('')    
     return (
         <div className="container">
             <form onSubmit={(e) => {
-                e.preventDefault()
-                console.log(email, password)
+                e.preventDefault()                
+                props.signUp({email, password, userFirstName, userLastName})
+                props.history.push('/')
             }} className="white">
                 <h5 className="grey-text text-darken-3">Sign Up</h5>
                 <div className="input-field">
@@ -38,4 +40,10 @@ function SignUp() {
     )
 }
 
-export default SignUp
+const mapDispatchToProps = dispath => {
+    return {
+        signUp: (newUser) => dispath(signUp(newUser))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(SignUp)

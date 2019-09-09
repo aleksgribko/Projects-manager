@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
+import { createProject } from '../../store/actions/projectActions.js'
 
-function CreateProject() {
+function CreateProject(props) {
 
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
@@ -9,7 +11,10 @@ function CreateProject() {
         <div className="container">
             <form onSubmit={(e) => {
                 e.preventDefault()
-                console.log(title, content)
+                props.createProject({title, content})
+                props.history.push('/')
+
+                
             }} className="white">
                 <h5 className="grey-text text-darken-3">Create New Project</h5>
                 <div className="input-field">
@@ -28,4 +33,10 @@ function CreateProject() {
     )
 }
 
-export default CreateProject
+const mapDispatchToProps = (dispatch) => {
+    return {
+        createProject: (project) => dispatch(createProject(project))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(CreateProject)
